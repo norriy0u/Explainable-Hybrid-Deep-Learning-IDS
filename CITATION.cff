@@ -1,0 +1,53 @@
+cff-version: 1.2.0
+message: "If you use this software in your research, please cite it using the following metadata."
+title: "Explainable Hybrid Deep Learning-Based Network Intrusion Detection System"
+version: "1.0.0"
+date-released: "2026-11-16"
+url: "https://github.com/norriy0u/Explainable-Hybrid-Deep-Learning-IDS"
+repository-code: "https://github.com/norriy0u/Explainable-Hybrid-Deep-Learning-IDS"
+license: MIT
+abstract: >
+  An intelligent, explainable network intrusion detection system (IDS) that combines
+  one-dimensional convolutional neural networks (1D-CNN), Bidirectional Long Short-Term Memory
+  (BiLSTM) networks, trainable temporal attention mechanisms, and SHAP (SHapley Additive
+  exPlanations) to classify network traffic into ten categories on the UNSW-NB15 benchmark dataset.
+  The system provides a full Streamlit SOC dashboard for interactive detection, model training,
+  and explainability analysis.
+keywords:
+  - intrusion detection
+  - cybersecurity
+  - deep learning
+  - explainable AI
+  - SHAP
+  - CNN
+  - BiLSTM
+  - attention mechanism
+  - network security
+  - UNSW-NB15
+  - PyTorch
+  - Keras
+  - Streamlit
+authors:
+  - family-names: "Raj"
+    given-names: "Amrita"
+    orcid: ""
+    email: "amritaatz@gmail.com"
+references:
+  - type: dataset
+    title: "UNSW-NB15: A Comprehensive Network Intrusion Dataset"
+    authors:
+      - family-names: "Moustafa"
+        given-names: "Nour"
+      - family-names: "Slay"
+        given-names: "Jill"
+    year: 2015
+    url: "https://research.unsw.edu.au/projects/unsw-nb15-dataset"
+  - type: article
+    title: "SHAP: A Unified Approach to Interpreting Model Predictions"
+    authors:
+      - family-names: "Lundberg"
+        given-names: "Scott M."
+      - family-names: "Lee"
+        given-names: "Su-In"
+    year: 2017
+    url: "https://arxiv.org/abs/1705.07874"

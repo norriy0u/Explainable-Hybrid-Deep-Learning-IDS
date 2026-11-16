@@ -1,0 +1,118 @@
+[
+    {
+        "alert_id": "SEC-20261114-93D597C5",
+        "timestamp": "2026-11-14 12:58:15",
+        "timestamp_iso": "2026-11-14T12:58:15.321412",
+        "is_intrusion": true,
+        "predicted_class": "Shellcode",
+        "confidence": 0.3398,
+        "confidence_pct": "33.98%",
+        "severity": "Critical",
+        "severity_color": "#EF4444",
+        "flow_identifier": "FLOW-93D597C5",
+        "top_features": [
+            {
+                "rank": 1,
+                "feature": "ct_ftp_cmd",
+                "importance_score": 0.09462,
+                "shap_value": 0.09462,
+                "feature_value": -0.091,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for ct_ftp_cmd observed during the connection sequence."
+            },
+            {
+                "rank": 2,
+                "feature": "dttl",
+                "importance_score": 0.05254,
+                "shap_value": -0.05254,
+                "feature_value": 1.348,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Destination time-to-live. Divergence from standard OS TTL values indicates anomalous path routing or proxies."
+            },
+            {
+                "rank": 3,
+                "feature": "djit",
+                "importance_score": 0.05935,
+                "shap_value": 0.05935,
+                "feature_value": -0.1555,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for djit observed during the connection sequence."
+            },
+            {
+                "rank": 4,
+                "feature": "service",
+                "importance_score": 0.06121,
+                "shap_value": 0.06121,
+                "feature_value": 0.6659,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Application service (HTTP, DNS, FTP, SMTP). Target service under stress during DoS or exploit."
+            },
+            {
+                "rank": 5,
+                "feature": "dwin",
+                "importance_score": 0.05059,
+                "shap_value": 0.05059,
+                "feature_value": 1.0035,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for dwin observed during the connection sequence."
+            },
+            {
+                "rank": 6,
+                "feature": "is_ftp_login",
+                "importance_score": 0.0463,
+                "shap_value": 0.0463,
+                "feature_value": -0.0917,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for is_ftp_login observed during the connection sequence."
+            },
+            {
+                "rank": 7,
+                "feature": "ct_src_ltm",
+                "importance_score": 0.04883,
+                "shap_value": 0.04883,
+                "feature_value": -0.5219,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for ct_src_ltm observed during the connection sequence."
+            },
+            {
+                "rank": 8,
+                "feature": "ct_srv_dst",
+                "importance_score": 0.0007,
+                "shap_value": 0.0007,
+                "feature_value": 2.6788,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for ct_srv_dst observed during the connection sequence."
+            },
+            {
+                "rank": 9,
+                "feature": "dtcpb",
+                "importance_score": 0.02364,
+                "shap_value": -0.02364,
+                "feature_value": 0.6613,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Network traffic metric for dtcpb observed during the connection sequence."
+            },
+            {
+                "rank": 10,
+                "feature": "sttl",
+                "importance_score": 0.00134,
+                "shap_value": 0.00134,
+                "feature_value": 0.7202,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Source time-to-live. Anomalous or clamped TTL values frequently signify spoofed or automated attack toolkits."
+            }
+        ],
+        "explanation_summary": "The Hybrid Deep Learning IDS classified this network traffic sequence as **Shellcode** with a confidence of **33.98%**. SHAP game-theoretic attribution identified that anomalous values in **ct_ftp_cmd, djit, service** were the primary drivers pushing the model's decision toward **Shellcode**. Counterbalancing metrics including **dttl, dtcpb** exhibited normal baseline behavior.",
+        "defensive_playbook": "REMOTE SHELLCODE INJECTION: Terminate associated TCP stream and freeze target process memory for forensics. Alert SOC incident response team for immediate host endpoint inspection."
+    }
+]

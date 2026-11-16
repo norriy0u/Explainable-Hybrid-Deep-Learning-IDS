@@ -1,0 +1,27 @@
+# Explainable Hybrid Deep Learning Network Intrusion Detection System
+# Core Dependencies Manifest
+
+numpy>=1.26.0
+pandas>=2.1.0
+scipy>=1.12.0
+scikit-learn>=1.4.0
+joblib>=1.3.0
+
+# Deep Learning Framework
+torch>=2.2.0
+keras>=3.0.0
+
+# Explainable AI (XAI)
+shap>=0.45.0
+
+# Visualizations & Plotting
+matplotlib>=3.8.0
+seaborn>=0.13.0
+plotly>=5.19.0
+
+# Frontend & Dashboard
+streamlit>=1.32.0
+
+# Dataset Utility
+kagglehub>=0.2.0
+
