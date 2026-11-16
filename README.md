@@ -16,21 +16,6 @@
 
 ---
 
-## 👩‍💻 Authors
-
-This project was developed collaboratively by two students as part of a **Third-Year, Fifth-Semester Deep Learning Elective**.
-
-| Author | GitHub |
-|:---|:---|
-| **Midhila M** | [![GitHub](https://img.shields.io/badge/midhila2106--cmd-181717?style=flat-square&logo=github)](https://github.com/midhila2106-cmd) |
-| **Amrita Raj** | [![GitHub](https://img.shields.io/badge/norriy0u-181717?style=flat-square&logo=github)](https://github.com/norriy0u) |
-
-**Academic Context:** Third-Year Undergraduate Engineering | Fifth Semester | Deep Learning Elective
-
-This project was undertaken to gain practical, hands-on experience implementing deep learning architectures for a real-world cybersecurity problem — from raw network traffic data through to model training, evaluation, and explainability.
-
----
-
 ## 📌 Table of Contents
 
 - [Project Overview](#-project-overview)
@@ -55,6 +40,8 @@ This project was undertaken to gain practical, hands-on experience implementing 
 - [Limitations](#-limitations)
 - [Future Work](#-future-work)
 - [References](#-references)
+- [Authors](#-authors)
+- [Licence](#-licence)
 
 ---
 
@@ -756,6 +743,15 @@ Possible extensions identified during the project:
 - Bahdanau, D., Cho, K. & Bengio, Y. (2015). Neural Machine Translation by Jointly Learning to Align and Translate. arXiv:1409.0473.
 - LeCun, Y., Bottou, L., Bengio, Y. & Haffner, P. (1998). Gradient-based learning applied to document recognition. *Proceedings of the IEEE*, 86(11), 2278–2324.
 - Ferrag, M. A. et al. (2020). Deep Learning for Cyber Security Intrusion Detection. *Journal of Information Security and Applications*, 50, 102419.
+
+---
+
+## 👥 Authors
+
+- **Midhila M** — [@midhila2106-cmd](https://github.com/midhila2106-cmd)
+- **Amrita Raj** — [@norriy0u](https://github.com/norriy0u)
+
+*Third-Year Undergraduate Engineering Project · 5th Semester Deep Learning Elective*
 
 ---
 
