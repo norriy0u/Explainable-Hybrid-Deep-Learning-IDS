@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 _base_dir = Path(__file__).resolve().parent
-while _base_dir.name != 'Explainable_Hybrid_IDS' and _base_dir.parent != _base_dir:
+while 'config' not in [p.name for p in _base_dir.iterdir() if p.is_dir()] and _base_dir.parent != _base_dir:
     _base_dir = _base_dir.parent
 if str(_base_dir) not in sys.path:
     sys.path.insert(0, str(_base_dir))

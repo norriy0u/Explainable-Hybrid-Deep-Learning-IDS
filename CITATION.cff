@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this software in your research, please cite it using the following metadata."
+message: "If you use this software in your research or coursework, please cite it using the following metadata."
 title: "Explainable Hybrid Deep Learning-Based Network Intrusion Detection System"
 version: "1.0.0"
 date-released: "2026-11-16"
@@ -7,12 +7,12 @@ url: "https://github.com/norriy0u/Explainable-Hybrid-Deep-Learning-IDS"
 repository-code: "https://github.com/norriy0u/Explainable-Hybrid-Deep-Learning-IDS"
 license: MIT
 abstract: >
-  An intelligent, explainable network intrusion detection system (IDS) that combines
-  one-dimensional convolutional neural networks (1D-CNN), Bidirectional Long Short-Term Memory
-  (BiLSTM) networks, trainable temporal attention mechanisms, and SHAP (SHapley Additive
-  exPlanations) to classify network traffic into ten categories on the UNSW-NB15 benchmark dataset.
-  The system provides a full Streamlit SOC dashboard for interactive detection, model training,
-  and explainability analysis.
+  A collaborative third-year undergraduate engineering project implementing an explainable
+  network intrusion detection system (IDS) using a hybrid deep learning architecture.
+  Combines 1D-CNN, Bidirectional LSTM, and trainable temporal attention with SHAP
+  (SHapley Additive exPlanations) for 10-class multiclass attack classification on the
+  UNSW-NB15 benchmark dataset. Deployed via an interactive Streamlit SOC-style dashboard.
+  Developed as part of a Deep Learning elective (Fifth Semester).
 keywords:
   - intrusion detection
   - cybersecurity
@@ -28,10 +28,12 @@ keywords:
   - Keras
   - Streamlit
 authors:
+  - family-names: "M"
+    given-names: "Midhila"
+    alias: "midhila2106-cmd"
   - family-names: "Raj"
     given-names: "Amrita"
-    orcid: ""
-    email: "amritaatz@gmail.com"
+    alias: "norriy0u"
 references:
   - type: dataset
     title: "UNSW-NB15: A Comprehensive Network Intrusion Dataset"
@@ -43,7 +45,7 @@ references:
     year: 2015
     url: "https://research.unsw.edu.au/projects/unsw-nb15-dataset"
   - type: article
-    title: "SHAP: A Unified Approach to Interpreting Model Predictions"
+    title: "A Unified Approach to Interpreting Model Predictions"
     authors:
       - family-names: "Lundberg"
         given-names: "Scott M."
@@ -51,4 +53,3 @@ references:
         given-names: "Su-In"
     year: 2017
     url: "https://arxiv.org/abs/1705.07874"
-
