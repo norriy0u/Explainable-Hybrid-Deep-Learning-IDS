@@ -19,7 +19,10 @@ from config.config import (
     DEFAULT_CNN_FILTERS,
     DEFAULT_LSTM_UNITS,
     DEFAULT_DROPOUT_RATE,
-    DEFAULT_DENSE_UNITS
+    DEFAULT_DENSE_UNITS,
+    TRAIN_DATASET_PATH,
+    TEST_DATASET_PATH,
+    BENCHMARK_SAMPLE_PATH
 )
 from utils.helpers import load_json
 from training.train_model import train_hybrid_ids
@@ -76,6 +79,9 @@ def render_training_page():
         mode = st.radio("Execution Dataset Mode:", ["Fast Dev Mode (Subsampled)", "Full Benchmark Partition (Comprehensive)"])
 
     subsample_n = 20000 if "Fast" in mode else None
+
+    if not TRAIN_DATASET_PATH.exists() or not TEST_DATASET_PATH.exists():
+        st.info("ℹ️ **Cloud Environment Notice:** The raw 175k-record dataset is excluded from the cloud repository to prevent container memory exhaustion. Training will execute on the bundled 1,000-record benchmark sample.")
 
     # 3. Training Execution Action
     st.markdown("<br>", unsafe_allow_html=True)

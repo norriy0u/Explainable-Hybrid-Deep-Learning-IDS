@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Tuple, Optional, Dict, Any
 import pandas as pd
 from utils.logger import get_logger
-from config.config import TRAIN_DATASET_PATH, TEST_DATASET_PATH, EXCLUDE_COLUMNS
+from config.config import TRAIN_DATASET_PATH, TEST_DATASET_PATH, BENCHMARK_SAMPLE_PATH, EXCLUDE_COLUMNS
 
 logger = get_logger("LoadDataset")
 
@@ -65,12 +65,22 @@ def load_unsw_nb15_datasets(
     """
     Loads both training and testing datasets.
     Automatically verifies schemas and ensures proper split isolation.
+    If full dataset files are absent (e.g. in cloud deployment), falls back to the benchmark sample.
     """
     train_path = train_path or TRAIN_DATASET_PATH
     test_path = test_path or TEST_DATASET_PATH
-    
+
+    if (not train_path.exists() or not test_path.exists()) and BENCHMARK_SAMPLE_PATH.exists():
+        logger.warning(f"Full dataset not found; loading benchmark sample from {BENCHMARK_SAMPLE_PATH.name} (1,000 records).")
+        sample_df = load_csv_data(BENCHMARK_SAMPLE_PATH)
+        from sklearn.model_selection import train_test_split
+        train_df, test_df = train_test_split(
+            sample_df, test_size=0.3, stratify=sample_df["attack_cat"], random_state=42
+        )
+        return train_df.reset_index(drop=True), test_df.reset_index(drop=True)
+
     train_df = load_csv_data(train_path)
     test_df = load_csv_data(test_path)
-    
+
     logger.info(f"Train split shape: {train_df.shape}, Test split shape: {test_df.shape}")
     return train_df, test_df
