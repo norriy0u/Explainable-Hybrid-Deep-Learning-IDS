@@ -30,8 +30,7 @@ def get_detection_engine() -> AttackDetectionEngine:
     """Caches detection engine in memory for instant inference."""
     return AttackDetectionEngine()
 
-@st.cache_data
-def load_sample_library():
+def load_sample_library() -> pd.DataFrame:
     """Loads a representative cache of real UNSW-NB15 test traffic flows."""
     target_path = None
     if TEST_DATASET_PATH.exists():
@@ -43,12 +42,27 @@ def load_sample_library():
         return pd.DataFrame()
 
     df_test = load_csv_data(target_path)
-    if "attack_cat" in df_test.columns:
-        df_test["attack_cat"] = df_test["attack_cat"].astype(str).str.strip()
-        dfs = [df_test[df_test["attack_cat"].str.lower() == cat.lower()].head(25) for cat in df_test["attack_cat"].unique()]
+    df_test.columns = [str(c).strip() for c in df_test.columns]
+
+    if "attack_cat" not in df_test.columns:
+        if "label" in df_test.columns:
+            df_test["attack_cat"] = df_test["label"].map({0: "Normal", 1: "DoS"}).fillna("Normal")
+        else:
+            df_test["attack_cat"] = "Normal"
+
+    df_test["attack_cat"] = df_test["attack_cat"].astype(str).str.strip()
+
+    dfs = []
+    for cat in df_test["attack_cat"].unique():
+        sub = df_test[df_test["attack_cat"].str.lower() == cat.lower()].head(25)
+        if not sub.empty:
+            dfs.append(sub)
+
+    if dfs:
         samples = pd.concat(dfs, ignore_index=True)
     else:
         samples = df_test.head(250).copy()
+
     return samples
 
 def render_detection_page():
@@ -84,6 +98,9 @@ def render_detection_page():
         if samples_df.empty:
             st.error("Test dataset not available in dataset/ directory.")
             return
+
+        if "attack_cat" not in samples_df.columns:
+            samples_df["attack_cat"] = "Normal"
 
         icol1, icol2 = st.columns([1, 2])
         with icol1:
