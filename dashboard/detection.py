@@ -23,7 +23,7 @@ from config.config import (
 )
 from preprocessing.load_dataset import load_csv_data
 from detection.predict_attack import AttackDetectionEngine
-from explainability.feature_visualization import create_temporal_attention_chart
+from explainability.feature_visualization import create_temporal_attention_chart, create_interactive_shap_bar_chart
 
 @st.cache_resource
 def get_detection_engine() -> AttackDetectionEngine:
@@ -251,8 +251,32 @@ def render_detection_page():
                 st.markdown("---")
                 st.markdown("### 🧠 Step 4: Explainable AI Quick Brief")
                 st.markdown(res["explanation"]["summary_text"])
-                
-                if st.button("🔬 View Deep SHAP Feature Attribution Breakdown ➔", use_container_width=True):
-                    st.session_state["nav_page"] = "Explainable AI (SHAP)"
+
+                if st.button("🔬 Open Dedicated Explainability Page ➔", use_container_width=True):
+                    st.session_state["nav_page"] = "🔬 Explainable AI (SHAP)"
+                    st.session_state["sidebar_nav_radio"] = "🔬 Explainable AI (SHAP)"
                     st.rerun()
+
+                st.markdown("<br>", unsafe_allow_html=True)
+                with st.expander("📊 View Detailed SHAP Feature Dynamics Inline", expanded=True):
+                    st.markdown("#### Positive & Negative Feature Attributions")
+                    shap_fig = create_interactive_shap_bar_chart(res["explanation"])
+                    st.plotly_chart(shap_fig, use_container_width=True)
+
+                    # Top features table
+                    top_f = res["explanation"].get("top_features", [])
+                    if top_f:
+                        st.markdown("#### Top Influential Network Flow Drivers")
+                        top_rows = []
+                        for rank, item in enumerate(top_f, 1):
+                            impact_str = "🔺 Threat Contributor" if item["impact"] == "positive" else "🛡️ Threat Mitigator"
+                            top_rows.append({
+                                "Rank": f"#{rank}",
+                                "Feature": item["feature"],
+                                "Observed Value": f"{item['observed_value']:.4f}",
+                                "SHAP Value": f"{item['shap_value']:+.4f}",
+                                "Impact": impact_str,
+                                "Domain Cyber Meaning": item["cyber_context"]
+                            })
+                        st.dataframe(pd.DataFrame(top_rows), use_container_width=True)
 
