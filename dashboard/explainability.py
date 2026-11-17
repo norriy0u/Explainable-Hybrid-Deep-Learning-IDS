@@ -77,26 +77,40 @@ def render_explainability_page():
     * **Crimson Bars (Positive SHAP > 0):** Network features whose anomalous values pushed the model toward classifying this flow as the detected attack category.
     * **Emerald Bars (Negative SHAP < 0):** Network features whose values counterbalanced or opposed this attack classification.
     """)
-    fig_shap = create_interactive_shap_bar_chart(explanation)
-    st.plotly_chart(fig_shap, use_container_width=True)
+    try:
+        fig_shap = create_interactive_shap_bar_chart(explanation)
+        st.plotly_chart(fig_shap, use_container_width=True)
+    except Exception as e:
+        st.warning(f"Could not render SHAP bar chart: {e}")
 
     # 4. Top Influential Features Table with Domain Context
     st.markdown("### 🔍 Top Influential Network Flow Features (Detailed Breakdown)")
     
-    top_features = explanation["top_features"]
+    top_features = explanation.get("top_features", []) if isinstance(explanation, dict) else []
     table_records = []
-    for f in top_features:
+    for rank, f in enumerate(top_features, 1):
+        if not isinstance(f, dict):
+            continue
+        rank_val = f.get("rank", f"#{rank}")
+        feat_name = f.get("feature", "Unknown")
+        obs_val = f.get("feature_value", f.get("observed_value", 0.0))
+        shap_val = f.get("shap_value", 0.0)
+        is_pos = f.get("is_positive", shap_val >= 0)
+        direction = f.get("direction", "Increased Risk (Positive)" if is_pos else "Decreased Risk (Negative)")
+        context = f.get("cyber_context", "")
+
         table_records.append({
-            "Rank": f["rank"],
-            "Feature Name": f["feature"],
-            "Observed Value": f"{f['feature_value']:.4f}",
-            "SHAP Attribution": f"{f['shap_value']:+.5f}",
-            "Impact Direction": f["direction"],
-            "Domain Security Meaning": f["cyber_context"]
+            "Rank": rank_val,
+            "Feature Name": feat_name,
+            "Observed Value": f"{float(obs_val):.4f}",
+            "SHAP Attribution": f"{float(shap_val):+.5f}",
+            "Impact Direction": direction,
+            "Domain Security Meaning": context
         })
         
-    df_top = pd.DataFrame(table_records)
-    st.dataframe(df_top, use_container_width=True, hide_index=True)
+    if table_records:
+        df_top = pd.DataFrame(table_records)
+        st.dataframe(df_top, use_container_width=True, hide_index=True)
 
     # 5. Temporal Attention vs SHAP Correlation Insight
     st.markdown("---")

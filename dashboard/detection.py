@@ -250,7 +250,9 @@ def render_detection_page():
             if res.get("explanation"):
                 st.markdown("---")
                 st.markdown("### 🧠 Step 4: Explainable AI Quick Brief")
-                st.markdown(res["explanation"]["summary_text"])
+                expl = res["explanation"]
+                if isinstance(expl, dict) and "summary_text" in expl:
+                    st.markdown(expl["summary_text"])
 
                 if st.button("🔬 Open Dedicated Explainability Page ➔", use_container_width=True):
                     st.session_state["nav_page"] = "🔬 Explainable AI (SHAP)"
@@ -259,27 +261,34 @@ def render_detection_page():
 
                 st.markdown("<br>", unsafe_allow_html=True)
                 with st.expander("📊 View Detailed SHAP Feature Dynamics Inline", expanded=True):
-                    st.markdown("#### Positive & Negative Feature Attributions")
-                    shap_fig = create_interactive_shap_bar_chart(res["explanation"])
-                    st.plotly_chart(shap_fig, use_container_width=True)
+                    try:
+                        st.markdown("#### Positive & Negative Feature Attributions")
+                        shap_fig = create_interactive_shap_bar_chart(expl)
+                        st.plotly_chart(shap_fig, use_container_width=True)
 
-                    # Top features table
-                    top_f = res["explanation"].get("top_features", [])
-                    if top_f:
-                        st.markdown("#### Top Influential Network Flow Drivers")
-                        top_rows = []
-                        for rank, item in enumerate(top_f, 1):
-                            is_pos = item.get("is_positive", item.get("shap_value", 0) >= 0)
-                            impact_str = "🔺 Threat Contributor" if is_pos else "🛡️ Threat Mitigator"
-                            obs_val = item.get("feature_value", item.get("observed_value", 0.0))
-                            shap_val = item.get("shap_value", 0.0)
-                            top_rows.append({
-                                "Rank": f"#{rank}",
-                                "Feature": item.get("feature", "Unknown"),
-                                "Observed Value": f"{float(obs_val):.4f}",
-                                "SHAP Value": f"{float(shap_val):+.5f}",
-                                "Impact": impact_str,
-                                "Domain Cyber Meaning": item.get("cyber_context", "")
-                            })
-                        st.dataframe(pd.DataFrame(top_rows), use_container_width=True, hide_index=True)
+                        # Top features table
+                        top_f = expl.get("top_features", []) if isinstance(expl, dict) else []
+                        if top_f and isinstance(top_f, list):
+                            st.markdown("#### Top Influential Network Flow Drivers")
+                            top_rows = []
+                            for rank, item in enumerate(top_f, 1):
+                                if not isinstance(item, dict):
+                                    continue
+                                is_pos = item.get("is_positive", item.get("shap_value", 0) >= 0)
+                                impact_str = "🔺 Threat Contributor" if is_pos else "🛡️ Threat Mitigator"
+                                obs_val = item.get("feature_value", item.get("observed_value", 0.0))
+                                shap_val = item.get("shap_value", 0.0)
+                                top_rows.append({
+                                    "Rank": f"#{rank}",
+                                    "Feature": item.get("feature", "Unknown"),
+                                    "Observed Value": f"{float(obs_val):.4f}",
+                                    "SHAP Value": f"{float(shap_val):+.5f}",
+                                    "Impact": impact_str,
+                                    "Domain Cyber Meaning": item.get("cyber_context", "")
+                                })
+                            if top_rows:
+                                st.dataframe(pd.DataFrame(top_rows), use_container_width=True, hide_index=True)
+                    except Exception as e:
+                        st.warning(f"Note: Inline SHAP dynamic view could not be rendered: {e}")
+                        st.info("Full interactive SHAP attribution and cyber interpretations can be viewed on the dedicated Explainability page.")
 

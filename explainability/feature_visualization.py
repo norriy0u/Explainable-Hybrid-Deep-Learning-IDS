@@ -71,12 +71,14 @@ def create_interactive_shap_bar_chart(explanation_result: Dict[str, Any]) -> go.
     """
     Creates an interactive Plotly horizontal bar chart for the Streamlit dashboard.
     """
-    features_info = explanation_result["top_features"][::-1]
-    features = [f["feature"] for f in features_info]
-    shap_vals = [f["shap_value"] for f in features_info]
-    feature_vals = [f["feature_value"] for f in features_info]
-    directions = [f["direction"] for f in features_info]
-    contexts = [f["cyber_context"] for f in features_info]
+    raw_info = explanation_result.get("top_features", [])
+    features_info = [f for f in raw_info if isinstance(f, dict)][::-1]
+    
+    features = [f.get("feature", "Unknown") for f in features_info]
+    shap_vals = [float(f.get("shap_value", 0.0)) for f in features_info]
+    feature_vals = [float(f.get("feature_value", f.get("observed_value", 0.0))) for f in features_info]
+    directions = [f.get("direction", "Increased Risk" if v >= 0 else "Decreased Risk") for f, v in zip(features_info, shap_vals)]
+    contexts = [f.get("cyber_context", "") for f in features_info]
 
     colors = ["#EF4444" if v >= 0 else "#10B981" for v in shap_vals]
 
@@ -98,9 +100,10 @@ def create_interactive_shap_bar_chart(explanation_result: Dict[str, Any]) -> go.
 
     fig.add_vline(x=0, line_width=1.5, line_dash="dash", line_color="#9CA3AF")
 
+    explained_name = explanation_result.get("explained_class_name", "Attack")
     fig.update_layout(
         title=dict(
-            text=f"<b>SHAP Feature Influence for {explanation_result['explained_class_name']} Classification</b>",
+            text=f"<b>SHAP Feature Influence for {explained_name} Classification</b>",
             font=dict(size=15, color="#F3F4F6")
         ),
         paper_bgcolor="#111827",
