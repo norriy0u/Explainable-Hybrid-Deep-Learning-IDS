@@ -43,10 +43,12 @@ def load_sample_library():
         return pd.DataFrame()
 
     df_test = load_csv_data(target_path)
-    # Take up to 25 samples of each attack category for interactive demonstration
-    samples = df_test.groupby("attack_cat", group_keys=False).apply(
-        lambda x: x.head(25)
-    ).reset_index(drop=True)
+    if "attack_cat" in df_test.columns:
+        df_test["attack_cat"] = df_test["attack_cat"].astype(str).str.strip()
+        dfs = [df_test[df_test["attack_cat"].str.lower() == cat.lower()].head(25) for cat in df_test["attack_cat"].unique()]
+        samples = pd.concat(dfs, ignore_index=True)
+    else:
+        samples = df_test.head(250).copy()
     return samples
 
 def render_detection_page():
@@ -93,15 +95,18 @@ def render_detection_page():
             filtered_samples = samples_df[samples_df["attack_cat"].astype(str).str.strip().str.lower() == cat_clean.lower()]
 
         with icol2:
-            sample_idx = st.selectbox(
-                f"Select Flow Index ({len(filtered_samples)} available in benchmark sample):",
-                options=list(filtered_samples.index),
-                format_func=lambda idx: f"Flow #{idx} | Service: {filtered_samples.loc[idx, 'service']} | Proto: {filtered_samples.loc[idx, 'proto']} | sbytes: {filtered_samples.loc[idx, 'sbytes']} | rate: {filtered_samples.loc[idx, 'rate']:.1f}"
-            )
-            # Create a 5-observation window starting at or around sample_idx
-            start_i = max(0, sample_idx - 4)
-            selected_traffic_df = samples_df.iloc[start_i:sample_idx + 1].copy()
-            ground_truth_label = str(samples_df.loc[sample_idx, "attack_cat"]).strip()
+            if not filtered_samples.empty:
+                sample_idx = st.selectbox(
+                    f"Select Flow Index ({len(filtered_samples)} available in benchmark sample):",
+                    options=list(filtered_samples.index),
+                    format_func=lambda idx: f"Flow #{idx} | Service: {filtered_samples.loc[idx, 'service']} | Proto: {filtered_samples.loc[idx, 'proto']} | sbytes: {filtered_samples.loc[idx, 'sbytes']} | rate: {filtered_samples.loc[idx, 'rate']:.1f}"
+                )
+                # Create a 5-observation window starting at or around sample_idx
+                start_i = max(0, sample_idx - 4)
+                selected_traffic_df = samples_df.iloc[start_i:sample_idx + 1].copy()
+                ground_truth_label = str(samples_df.loc[sample_idx, "attack_cat"]).strip()
+            else:
+                st.warning(f"No samples found for category: {cat_clean}")
 
     else:
         uploaded_file = st.file_uploader("Upload Network Flow CSV (1 to N rows):", type=["csv"])
