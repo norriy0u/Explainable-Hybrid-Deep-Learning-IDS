@@ -269,14 +269,17 @@ def render_detection_page():
                         st.markdown("#### Top Influential Network Flow Drivers")
                         top_rows = []
                         for rank, item in enumerate(top_f, 1):
-                            impact_str = "🔺 Threat Contributor" if item["impact"] == "positive" else "🛡️ Threat Mitigator"
+                            is_pos = item.get("is_positive", item.get("shap_value", 0) >= 0)
+                            impact_str = "🔺 Threat Contributor" if is_pos else "🛡️ Threat Mitigator"
+                            obs_val = item.get("feature_value", item.get("observed_value", 0.0))
+                            shap_val = item.get("shap_value", 0.0)
                             top_rows.append({
                                 "Rank": f"#{rank}",
-                                "Feature": item["feature"],
-                                "Observed Value": f"{item['observed_value']:.4f}",
-                                "SHAP Value": f"{item['shap_value']:+.4f}",
+                                "Feature": item.get("feature", "Unknown"),
+                                "Observed Value": f"{float(obs_val):.4f}",
+                                "SHAP Value": f"{float(shap_val):+.5f}",
                                 "Impact": impact_str,
-                                "Domain Cyber Meaning": item["cyber_context"]
+                                "Domain Cyber Meaning": item.get("cyber_context", "")
                             })
-                        st.dataframe(pd.DataFrame(top_rows), use_container_width=True)
+                        st.dataframe(pd.DataFrame(top_rows), use_container_width=True, hide_index=True)
 
