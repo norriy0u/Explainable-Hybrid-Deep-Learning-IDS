@@ -15,6 +15,7 @@ import plotly.graph_objects as go
 
 from config.config import (
     TEST_DATASET_PATH,
+    BENCHMARK_SAMPLE_PATH,
     LABEL_MAPPING,
     CLASS_NAMES,
     DEMO_ATTACK_CLASS,
@@ -32,9 +33,16 @@ def get_detection_engine() -> AttackDetectionEngine:
 @st.cache_data
 def load_sample_library():
     """Loads a representative cache of real UNSW-NB15 test traffic flows."""
-    if not TEST_DATASET_PATH.exists():
+    target_path = None
+    if TEST_DATASET_PATH.exists():
+        target_path = TEST_DATASET_PATH
+    elif BENCHMARK_SAMPLE_PATH.exists():
+        target_path = BENCHMARK_SAMPLE_PATH
+
+    if target_path is None:
         return pd.DataFrame()
-    df_test = load_csv_data(TEST_DATASET_PATH)
+
+    df_test = load_csv_data(target_path)
     # Take up to 25 samples of each attack category for interactive demonstration
     samples = df_test.groupby("attack_cat", group_keys=False).apply(
         lambda x: x.head(25)

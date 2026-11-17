@@ -11,6 +11,7 @@ import plotly.express as px
 from config.config import (
     TRAIN_DATASET_PATH,
     TEST_DATASET_PATH,
+    BENCHMARK_SAMPLE_PATH,
     FEATURES_METADATA_PATH,
     LABEL_MAPPING,
     DEMO_ATTACK_CLASS
@@ -39,17 +40,27 @@ def render_dataset_explorer_page():
     split_name = ""
 
     if source_choice == "Official Benchmark Repository (Local)":
-        split_option = st.selectbox(
-            "Select Benchmark Partition:",
-            [
-                f"Training Partition ({TRAIN_DATASET_PATH.name})",
-                f"Testing Partition ({TEST_DATASET_PATH.name})"
-            ]
-        )
-        target_path = TRAIN_DATASET_PATH if "training" in split_option.lower() else TEST_DATASET_PATH
+        split_options = [
+            f"Pre-Packaged Benchmark Sample ({BENCHMARK_SAMPLE_PATH.name} — 1,000 records)",
+            f"Testing Partition ({TEST_DATASET_PATH.name})",
+            f"Training Partition ({TRAIN_DATASET_PATH.name})"
+        ]
+        split_option = st.selectbox("Select Benchmark Partition:", split_options)
+
+        if "sample" in split_option.lower():
+            target_path = BENCHMARK_SAMPLE_PATH
+        elif "training" in split_option.lower():
+            target_path = TRAIN_DATASET_PATH
+        else:
+            target_path = TEST_DATASET_PATH
+
         if target_path.exists():
             df_selected = load_csv_data(target_path)
             split_name = target_path.name
+        elif BENCHMARK_SAMPLE_PATH.exists():
+            st.info(f"Full dataset file `{target_path.name}` is not bundled in the cloud repository to preserve memory quota. Loaded the bundled 1,000-record benchmark sample instead.")
+            df_selected = load_csv_data(BENCHMARK_SAMPLE_PATH)
+            split_name = f"Benchmark Sample ({BENCHMARK_SAMPLE_PATH.name})"
         else:
             st.error(f"File not found: {target_path}. Please place official CSVs in the dataset/ folder.")
     else:

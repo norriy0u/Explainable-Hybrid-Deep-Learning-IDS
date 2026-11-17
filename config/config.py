@@ -33,6 +33,7 @@ for p in [MODELS_DIR, PREPROCESSORS_DIR, PLOTS_DIR, SHAP_PLOTS_DIR, REPORTS_DIR,
 # Default Dataset File Paths
 TRAIN_DATASET_PATH = DATASET_DIR / "UNSW_NB15_training-set.csv"
 TEST_DATASET_PATH = DATASET_DIR / "UNSW_NB15_testing-set.csv"
+BENCHMARK_SAMPLE_PATH = DATASET_DIR / "benchmark_sample.csv"
 FEATURES_METADATA_PATH = DATASET_DIR / "NUSW-NB15_features.csv"
 
 # Target Multiclass Mapping (Exact 10 classes)
