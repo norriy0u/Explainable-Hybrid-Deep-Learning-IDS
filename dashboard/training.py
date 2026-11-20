@@ -25,9 +25,11 @@ from config.config import (
     BENCHMARK_SAMPLE_PATH
 )
 from utils.helpers import load_json
-from training.train_model import train_hybrid_ids
+
 
 def render_training_page():
+    from training.train_model import train_hybrid_ids
+
     st.markdown("""
     <div class="soc-header">
         <h1 class="soc-header-title">⚡ MODEL TRAINING & ARCHITECTURAL CONFIGURATION</h1>
@@ -42,7 +44,6 @@ def render_training_page():
     pipeline_path = PREPROCESSORS_DIR / "preprocessing_pipeline.joblib"
     history_path = REPORTS_DIR / "training_history.json"
     curves_path = PLOTS_DIR / "training_curves.png"
-
     scol1, scol2 = st.columns([1.2, 0.8])
     with scol1:
         if model_path.exists() and pipeline_path.exists():

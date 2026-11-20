@@ -143,10 +143,14 @@ class AttackDetectionEngine:
         # 4. Generate SHAP Explanation
         explanation = None
         if explain and self.explainer is not None:
-            explanation = self.explainer.explain_sequence_prediction(
-                eval_sequence,
-                target_class=predicted_class_id
-            )
+            try:
+                explanation = self.explainer.explain_sequence_prediction(
+                    eval_sequence,
+                    target_class=predicted_class_id
+                )
+            except Exception as e:
+                logger.error(f"SHAP explanation calculation failed: {e}", exc_info=True)
+                explanation = None
 
         # 5. Generate Defensive Security Alert
         summary_text = explanation["summary_text"] if explanation else None
