@@ -65,7 +65,7 @@ def render_performance_page():
     with pcol_left:
         st.markdown("### 🧩 Confusion Matrix Heatmap")
         if cm_path.exists():
-            st.image(str(cm_path), use_column_width=True, caption="UNSW-NB15 10-Class Confusion Matrix")
+            st.image(str(cm_path), width="stretch", caption="UNSW-NB15 10-Class Confusion Matrix")
         else:
             cm = np.array(eval_data.get("confusion_matrix", []))
             if len(cm) > 0:
@@ -123,7 +123,7 @@ def render_performance_page():
         st.dataframe(pd.DataFrame(ab_records), use_container_width=True, hide_index=True)
         
         if ablation_plot.exists():
-            st.image(str(ablation_plot), use_column_width=True, caption="Comparative Performance Across Model Ablations")
+            st.image(str(ablation_plot), width="stretch", caption="Comparative Performance Across Model Ablations")
     else:
         st.info("Ablation study is currently computing or has not been triggered yet.")
 
@@ -144,7 +144,7 @@ def render_performance_page():
             })
         st.dataframe(pd.DataFrame(seq_records), use_container_width=True, hide_index=True)
         if seq_plot.exists():
-            st.image(str(seq_plot), use_column_width=True, caption="Impact of Observation Sequence Length (T) on Intrusion Detection")
+            st.image(str(seq_plot), width="stretch", caption="Impact of Observation Sequence Length (T) on Intrusion Detection")
     else:
         st.info("Sequence length comparison results will appear once the ablation study finishes.")
 

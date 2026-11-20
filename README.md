@@ -518,25 +518,40 @@ dataset/
 Download from: https://research.unsw.edu.au/projects/unsw-nb15-dataset  
 See [`dataset/README.md`](dataset/README.md) for detailed instructions.
 
-### Step 5 — Windows DLL Unblock (if needed)
+### Step 5 — Windows Application Control (Smart App Control) Note
 
-If PyTorch fails to import on Windows due to security zone restrictions:
+On Windows 11 systems with **Smart App Control / Application Control** enabled, newly downloaded unsigned `.pyd`/`.dll` native wheels inside freshly created virtual environments (for example, `ml_dtypes/_ml_dtypes_ext` or `shap` inside `.venv313`) may trigger:
 
-```powershell
-Get-ChildItem "$env:APPDATA\Python" -Recurse -Filter "*.dll" | ForEach-Object { Unblock-File $_.FullName }
+```text
+ImportError: DLL load failed while importing _ml_dtypes_ext: An Application Control policy has blocked this file.
 ```
+
+**Safe Resolution (Do NOT disable Windows security):**
+- Use the verified local Python 3.14 interpreter (`C:\Python314\python.exe`) where all 13 required libraries (`numpy`, `pandas`, `scikit-learn`, `ml_dtypes`, `torch`, `keras`, `shap`, `plotly`, `streamlit`) load cleanly under Windows Application Control.
+- `.vscode/settings.json` is pre-configured to select `C:\Python314\python.exe` automatically when opening `Explainable_Hybrid_IDS_Final` in VS Code.
+- For cloud/Linux execution without Windows Application Control restrictions, the project also runs directly on **Streamlit Community Cloud** or **WSL2 / Ubuntu**.
 
 ---
 
-## 🚀 Running the Application
+## 🚀 Running the Application (VS Code & Local Windows)
 
-```bash
-python -m streamlit run app.py
+### Option A — One-Click Windows Launcher (Recommended)
+Double-click **`run_app.bat`** inside `Explainable_Hybrid_IDS_Final/`, or run in PowerShell:
+
+```powershell
+.\run_app.ps1
+```
+
+### Option B — Run Manually in VS Code Terminal
+
+```powershell
+$env:KERAS_BACKEND = "torch"
+C:\Python314\python.exe -m streamlit run app.py
 ```
 
 Open: **http://localhost:8501**
 
-> A pre-trained model (`artifacts/models/hybrid_ids_model.keras`) and preprocessor (`artifacts/preprocessors/preprocessing_pipeline.joblib`) are included in the repository. The Attack Detection and Explainability pages work immediately without retraining.
+> A pre-trained model (`artifacts/models/hybrid_ids_model.keras`) and fitted preprocessor (`artifacts/preprocessors/preprocessing_pipeline.joblib`) are included. All 8 dashboard pages — including live Attack Detection, genuine Temporal Attention weights, and SHAP Explainability — work immediately without retraining.
 
 ---
 

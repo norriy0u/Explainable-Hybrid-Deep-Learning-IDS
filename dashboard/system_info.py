@@ -3,14 +3,24 @@ Dashboard Page 8: System Architecture, Environment Specifications, and Research 
 Documents the deep learning dataflow, mathematical foundations, and defensive cybersecurity policy.
 """
 
+import importlib
 import sys
 import platform
 import streamlit as st
 import pandas as pd
-import keras
-import torch
-import shap
-import sklearn
+
+
+def _safe_pkg_info(module_name: str, label: str = None) -> str:
+    """Safely imports a package to inspect its version without crashing the page if blocked."""
+    try:
+        mod = importlib.import_module(module_name)
+        ver = getattr(mod, "__version__", "Installed")
+        if module_name == "keras":
+            backend = getattr(mod.backend, "backend", lambda: "unknown")()
+            return f"Keras {ver} (Backend: {backend})"
+        return f"{label or module_name} {ver}"
+    except Exception as exc:
+        return f"Unavailable ({type(exc).__name__}: {str(exc)[:80]})"
 
 def render_system_info_page():
     st.markdown("""
@@ -103,11 +113,11 @@ def render_system_info_page():
     st.markdown("### 💻 Runtime Environment & Software Versions")
     env_data = [
         {"Component": "Operating System", "Version / Details": f"{platform.system()} {platform.release()} ({platform.machine()})"},
-        {"Component": "Python Runtime", "Version / Details": sys.version.split()[0]},
-        {"Component": "Deep Learning Engine", "Version / Details": f"Keras {keras.__version__} (Backend: {keras.backend.backend()})"},
-        {"Component": "Tensor / Autograd Engine", "Version / Details": f"PyTorch {torch.__version__}"},
-        {"Component": "Explainable AI (XAI)", "Version / Details": f"SHAP {shap.__version__}"},
-        {"Component": "Machine Learning & Metrics", "Version / Details": f"Scikit-Learn {sklearn.__version__}"},
+        {"Component": "Python Runtime", "Version / Details": f"{sys.version.split()[0]} ({sys.executable})"},
+        {"Component": "Deep Learning Engine", "Version / Details": _safe_pkg_info("keras", "Keras")},
+        {"Component": "Tensor / Autograd Engine", "Version / Details": _safe_pkg_info("torch", "PyTorch")},
+        {"Component": "Explainable AI (XAI)", "Version / Details": _safe_pkg_info("shap", "SHAP")},
+        {"Component": "Machine Learning & Metrics", "Version / Details": _safe_pkg_info("sklearn", "Scikit-Learn")},
         {"Component": "Data Processing", "Version / Details": f"Pandas {pd.__version__}"},
         {"Component": "Interactive SOC Frontend", "Version / Details": f"Streamlit {st.__version__}"}
     ]

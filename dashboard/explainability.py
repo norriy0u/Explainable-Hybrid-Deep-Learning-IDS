@@ -65,9 +65,11 @@ def render_explainability_page():
 
     # 2. Plain-English SOC Analyst Brief
     st.markdown("### 📋 SOC Threat Telemetry Brief")
+    import re as _re
+    brief_html = _re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", str(explanation.get("summary_text", "")))
     st.markdown(f"""
     <div style="background: rgba(30, 41, 59, 0.6); border-left: 4px solid #38BDF8; padding: 14px 18px; border-radius: 4px; font-size: 14px; line-height: 1.6; color: #E2E8F0; margin-bottom: 24px;">
-        {explanation['summary_text']}
+        {brief_html}
     </div>
     """, unsafe_allow_html=True)
 

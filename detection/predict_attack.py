@@ -74,7 +74,24 @@ class AttackDetectionEngine:
         )
         self.model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
         logger.info("Hybrid IDS Model loaded successfully.")
-        
+
+        # Build auxiliary read-only extractor for genuine learned Temporal Attention weights
+        self.bilstm_extractor = None
+        self.attn_weights_params = None
+        try:
+            bilstm_layer = self.model.get_layer("bilstm_temporal_context")
+            attn_layer = self.model.get_layer("temporal_attention_mechanism")
+            attn_w = attn_layer.get_weights()
+            if len(attn_w) == 3:
+                self.bilstm_extractor = keras.Model(
+                    inputs=self.model.inputs,
+                    outputs=bilstm_layer.output
+                )
+                self.attn_weights_params = attn_w  # [W (128,128), b (128,), v (128,1)]
+                logger.info("Initialized live Temporal Attention weight extractor from trained layer weights.")
+        except Exception as e:
+            logger.warning(f"Could not attach auxiliary attention weight extractor: {e}")
+
         self.history_mgr = DetectionHistoryManager()
         self.explainer: Optional[IDSShapExplainer] = None
         self._init_explainer(background_dataset)
@@ -128,7 +145,20 @@ class AttackDetectionEngine:
             attn_weights = raw_preds[1][0]
         else:
             probs_matrix = raw_preds
-            attn_weights = np.ones((self.pipeline.sequence_length,)) / self.pipeline.sequence_length
+            if self.bilstm_extractor is not None and self.attn_weights_params is not None:
+                try:
+                    bilstm_out = self.bilstm_extractor.predict(eval_sequence, verbose=0)
+                    W, b, v = self.attn_weights_params
+                    projected = np.tanh(np.matmul(bilstm_out, W) + b)
+                    scores = np.matmul(projected, v)  # (1, T, 1)
+                    scores_shifted = scores - np.max(scores, axis=1, keepdims=True)
+                    exp_scores = np.exp(scores_shifted)
+                    attn_weights = (exp_scores / np.sum(exp_scores, axis=1, keepdims=True))[0, :, 0]
+                except Exception as e:
+                    logger.warning(f"Fallback to uniform attention weights: {e}")
+                    attn_weights = np.ones((self.pipeline.sequence_length,)) / self.pipeline.sequence_length
+            else:
+                attn_weights = np.ones((self.pipeline.sequence_length,)) / self.pipeline.sequence_length
 
         probs = probs_matrix[0] # (10,)
         latency_ms = (time.time() - start_t) * 1000.0

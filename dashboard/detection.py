@@ -22,12 +22,12 @@ from config.config import (
     SEVERITY_LEVELS
 )
 from preprocessing.load_dataset import load_csv_data
-from detection.predict_attack import AttackDetectionEngine
 from explainability.feature_visualization import create_temporal_attention_chart, create_interactive_shap_bar_chart
 
 @st.cache_resource
-def get_detection_engine() -> AttackDetectionEngine:
-    """Caches detection engine in memory for instant inference."""
+def get_detection_engine():
+    """Lazily imports and caches the detection engine in memory for instant inference."""
+    from detection.predict_attack import AttackDetectionEngine
     return AttackDetectionEngine()
 
 def load_sample_library() -> pd.DataFrame:
@@ -118,15 +118,14 @@ def render_detection_page():
                     options=list(filtered_samples.index),
                     format_func=lambda idx: f"Flow #{idx} | Service: {filtered_samples.loc[idx, 'service']} | Proto: {filtered_samples.loc[idx, 'proto']} | sbytes: {filtered_samples.loc[idx, 'sbytes']} | rate: {filtered_samples.loc[idx, 'rate']:.1f}"
                 )
-                # Select 5 consecutive flows from the filtered category for consistent temporal demonstration
-                matching_indices = list(filtered_samples.index)
-                curr_pos = matching_indices.index(sample_idx)
-                start_pos = max(0, curr_pos - 4)
-                chosen_indices = matching_indices[start_pos:curr_pos + 1]
-                if len(chosen_indices) < 5 and len(matching_indices) >= 5:
-                    chosen_indices = matching_indices[:5]
-                selected_traffic_df = samples_df.loc[chosen_indices].copy()
-                ground_truth_label = str(samples_df.loc[sample_idx, "attack_cat"]).strip()
+                # Build a pure same-category window of up to 5 consecutive flows ending at sample_idx
+                # (prevents mixing rows from a neighboring category at class boundaries)
+                cat_positions = list(filtered_samples.index)
+                pos_in_cat = cat_positions.index(sample_idx)
+                start_pos = max(0, pos_in_cat - 4)
+                window_indices = cat_positions[start_pos:pos_in_cat + 1]
+                selected_traffic_df = filtered_samples.loc[window_indices].copy()
+                ground_truth_label = str(filtered_samples.loc[sample_idx, "attack_cat"]).strip()
             else:
                 st.warning(f"No samples found for category: {cat_clean}")
 

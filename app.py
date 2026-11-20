@@ -1,18 +1,21 @@
 """
 Main Streamlit Application Entrypoint for Explainable Hybrid Deep Learning IDS.
-Coordinates multi-page SOC dashboard navigation, state persistence, and styling.
+Coordinates multi-page SOC dashboard navigation, state persistence, safe lazy imports, and styling.
 """
 
+import os
 import sys
 from pathlib import Path
 
-# Add project root to path
+# Configure Keras backend BEFORE any deep learning imports
+os.environ.setdefault("KERAS_BACKEND", "torch")
+
+# Ensure project root is on sys.path
 _app_dir = Path(__file__).resolve().parent
 if str(_app_dir) not in sys.path:
     sys.path.insert(0, str(_app_dir))
 
-import os
-os.environ["KERAS_BACKEND"] = "torch"
+import importlib
 import streamlit as st
 
 # Configure Page
@@ -24,32 +27,26 @@ st.set_page_config(
 )
 
 from dashboard.styles import apply_soc_theme
-from dashboard.overview import render_overview_page
-from dashboard.dataset_explorer import render_dataset_explorer_page
-from dashboard.training import render_training_page
-from dashboard.detection import render_detection_page
-from dashboard.explainability import render_explainability_page
-from dashboard.performance import render_performance_page
-from dashboard.alerts import render_alerts_page
-from dashboard.system_info import render_system_info_page
 from config.config import MODELS_DIR, PREPROCESSORS_DIR
 
 # Apply Custom SOC Aesthetic
 apply_soc_theme()
 
-# Navigation Pages
+# Lazy Page Registry: (module_path, render_function_name)
+# Prevents non-ML pages (Overview, Dataset Explorer, Performance, Alerts) from importing
+# Keras/PyTorch/SHAP at startup, speeding up initial load and isolating environment issues.
 PAGES = {
-    "🛡️ SOC Command Overview": render_overview_page,
-    "📁 Dataset Explorer": render_dataset_explorer_page,
-    "⚡ Model Training": render_training_page,
-    "🎯 Attack Detection (Demo)": render_detection_page,
-    "🔬 Explainable AI (SHAP)": render_explainability_page,
-    "📊 Model Performance": render_performance_page,
-    "🚨 Incident History": render_alerts_page,
-    "ℹ️ System Architecture": render_system_info_page
+    "🛡️ SOC Command Overview": ("dashboard.overview", "render_overview_page"),
+    "📁 Dataset Explorer": ("dashboard.dataset_explorer", "render_dataset_explorer_page"),
+    "⚡ Model Training": ("dashboard.training", "render_training_page"),
+    "🎯 Attack Detection (Demo)": ("dashboard.detection", "render_detection_page"),
+    "🔬 Explainable AI (SHAP)": ("dashboard.explainability", "render_explainability_page"),
+    "📊 Model Performance": ("dashboard.performance", "render_performance_page"),
+    "🚨 Incident History": ("dashboard.alerts", "render_alerts_page"),
+    "ℹ️ System Architecture": ("dashboard.system_info", "render_system_info_page"),
 }
 
-# Sidebar Navigation
+# Sidebar Branding
 st.sidebar.markdown("""
 <div style="text-align: center; padding: 12px 0 18px 0; border-bottom: 1px solid #1E293B;">
     <div style="font-size: 26px;">🛡️</div>
@@ -79,7 +76,6 @@ st.sidebar.markdown(f"""
 # Synchronize Navigation State
 nav_keys = list(PAGES.keys())
 
-# If another page requested a programmatic page navigation
 if "nav_page" in st.session_state:
     target = st.session_state["nav_page"]
     for k in nav_keys:
@@ -108,7 +104,24 @@ st.sidebar.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Render Target Page
-page_fn = PAGES[selected_page]
-page_fn()
-
+# Lazily import and render the selected page
+module_name, func_name = PAGES[selected_page]
+try:
+    page_module = importlib.import_module(module_name)
+    page_fn = getattr(page_module, func_name)
+    page_fn()
+except ImportError as exc:
+    st.error(f"Could not load **{selected_page}** due to a Python dependency/DLL error: `{exc}`")
+    if "Application Control" in str(exc) or "_ml_dtypes_ext" in str(exc) or "WinError 4551" in str(exc):
+        st.warning(
+            "**Windows Application Control (Smart App Control) Blocked a Native Python Extension**\n\n"
+            "Your current virtual environment contains a native `.pyd`/`.dll` extension (such as `ml_dtypes` or `shap`) "
+            "that Windows Application Control blocked from loading.\n\n"
+            "**Safe Fix (No Security Changes Needed):**\n"
+            "Launch the dashboard using the verified Python 3.14 interpreter (`C:\\Python314\\python.exe`) via `run_app.bat` or:\n"
+            "```powershell\n"
+            "C:\\Python314\\python.exe -m streamlit run app.py\n"
+            "```"
+        )
+    else:
+        st.info("Install project dependencies with `pip install -r requirements.txt` and restart Streamlit.")

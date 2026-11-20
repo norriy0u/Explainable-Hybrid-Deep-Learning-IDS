@@ -1,27 +1,29 @@
 # Explainable Hybrid Deep Learning Network Intrusion Detection System
-# Core Dependencies Manifest
+# Verified Compatible Dependencies Manifest (Keras 3 + PyTorch Backend)
 
-numpy>=1.26.0
-pandas>=2.1.0
-scipy>=1.12.0
-scikit-learn>=1.4.0
-joblib>=1.3.0
+# Core Scientific Computing & ML
+numpy>=1.26.0,<3.0
+pandas>=2.1.0,<4.0
+scipy>=1.12.0,<2.0
+scikit-learn>=1.4.0,<2.0
+joblib>=1.3.0,<2.0
 
-# Deep Learning Framework
-torch>=2.2.0
-keras>=3.0.0
+# Deep Learning Framework (Keras 3 with PyTorch Backend)
+# Set KERAS_BACKEND=torch before importing keras
+torch>=2.2.0,<3.0
+keras>=3.0.0,<4.0
+ml-dtypes>=0.4.0,<1.0
 
 # Explainable AI (XAI)
-shap>=0.45.0
+shap>=0.45.0,<1.0
 
 # Visualizations & Plotting
-matplotlib>=3.8.0
-seaborn>=0.13.0
-plotly>=5.19.0
+matplotlib>=3.8.0,<4.0
+seaborn>=0.13.0,<1.0
+plotly>=5.19.0,<8.0
 
-# Frontend & Dashboard
-streamlit>=1.32.0
+# Interactive SOC Dashboard
+streamlit>=1.32.0,<2.0
 
-# Dataset Utility
+# Optional Dataset Download Utility
 kagglehub>=0.2.0
-

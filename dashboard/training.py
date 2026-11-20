@@ -28,8 +28,6 @@ from utils.helpers import load_json
 
 
 def render_training_page():
-    from training.train_model import train_hybrid_ids
-
     st.markdown("""
     <div class="soc-header">
         <h1 class="soc-header-title">⚡ MODEL TRAINING & ARCHITECTURAL CONFIGURATION</h1>
@@ -91,6 +89,10 @@ def render_training_page():
         status_box = st.empty()
         
         try:
+            status_box.info("Loading deep learning training engine and preprocessing pipeline...")
+            progress_bar.progress(15, text="Importing Keras/PyTorch training modules...")
+            from training.train_model import train_hybrid_ids
+
             status_box.info("Fitting Preprocessing Pipeline and Generating Flow Sequences...")
             progress_bar.progress(25, text="Processing UNSW-NB15 dataset...")
             
@@ -121,5 +123,5 @@ def render_training_page():
     if curves_path.exists():
         st.markdown("---")
         st.markdown("### 📈 Training & Validation Convergence Curves")
-        st.image(str(curves_path), use_column_width=True, caption="Model Loss and Accuracy Trajectory Across Epochs")
+        st.image(str(curves_path), width="stretch", caption="Model Loss and Accuracy Trajectory Across Epochs")
 

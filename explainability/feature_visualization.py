@@ -148,15 +148,15 @@ def create_temporal_attention_chart(
 
     fig.update_layout(
         title=dict(
-            text="<b>Temporal Attention Mechanism Weights Across Sequence Window</b>",
-            font=dict(size=14, color="#F3F4F6")
+            text="<b>Temporal Attention Weights Across Window (α_t)</b>",
+            font=dict(size=13, color="#F3F4F6")
         ),
         paper_bgcolor="#111827",
         plot_bgcolor="#1F2937",
         font=dict(color="#E5E7EB"),
         xaxis=dict(gridcolor="#374151", title="Time Step in Sequence"),
-        yaxis=dict(gridcolor="#374151", title="Attention Weight (Normalized α_t)", range=[0, max(weights) * 1.25]),
-        margin=dict(l=40, r=40, t=50, b=40),
-        height=320
+        yaxis=dict(gridcolor="#374151", title="Attention Weight (α_t)", range=[0, max(max(weights) * 1.32, 0.1)]),
+        margin=dict(l=50, r=25, t=48, b=40),
+        height=350
     )
     return fig
