@@ -263,7 +263,6 @@ def render_detection_page():
 
                 if st.button("🔬 Open Dedicated Explainability Page ➔", use_container_width=True):
                     st.session_state["nav_page"] = "🔬 Explainable AI (SHAP)"
-                    st.session_state["sidebar_nav_radio"] = "🔬 Explainable AI (SHAP)"
                     st.rerun()
 
                 st.markdown("<br>", unsafe_allow_html=True)
