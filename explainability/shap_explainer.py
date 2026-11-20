@@ -139,15 +139,8 @@ class IDSShapExplainer:
         explain_class_id = target_class if target_class is not None else predicted_class_id
         explain_class_name = LABEL_MAPPING.get(explain_class_id, "Unknown")
 
-       # 2. Compute SHAP Values using flattened input
-sample_flat = input_sequence.reshape(1, -1)
-# Permutation explainer requires max_evals >= 2 * num_features + 1 (421 for 5x42=210)
-num_flat_features = sample_flat.shape[1]
-required_evals = max(500, 2 * num_flat_features + 1)
-try:
-    shap_explanation = self.explainer(sample_flat, max_evals=required_evals, silent=True)
-except TypeError:
-    shap_explanation = self.explainer(sample_flat, max_evals=required_evals)
+        # 2. Compute SHAP Values using flattened input
+        sample_flat = input_sequence.reshape(1, -1)
         # Permutation explainer requires max_evals >= 2 * num_features + 1 (421 for 5x42=210)
         num_flat_features = sample_flat.shape[1]
         required_evals = max(500, 2 * num_flat_features + 1)
