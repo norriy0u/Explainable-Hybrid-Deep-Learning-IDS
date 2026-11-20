@@ -76,22 +76,25 @@ st.sidebar.markdown(f"""
 # Synchronize Navigation State
 nav_keys = list(PAGES.keys())
 
+if "current_page_name" not in st.session_state:
+    st.session_state["current_page_name"] = nav_keys[0]
+
 if "nav_page" in st.session_state:
     target = st.session_state["nav_page"]
     for k in nav_keys:
         if target.lower() in k.lower():
-            st.session_state["sidebar_nav_radio"] = k
+            st.session_state["current_page_name"] = k
             break
     del st.session_state["nav_page"]
 
-if "sidebar_nav_radio" not in st.session_state:
-    st.session_state["sidebar_nav_radio"] = nav_keys[0]
+current_idx = nav_keys.index(st.session_state["current_page_name"]) if st.session_state["current_page_name"] in nav_keys else 0
 
 selected_page = st.sidebar.radio(
     "Navigation Console:",
     nav_keys,
-    key="sidebar_nav_radio"
+    index=current_idx
 )
+st.session_state["current_page_name"] = selected_page
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("""
