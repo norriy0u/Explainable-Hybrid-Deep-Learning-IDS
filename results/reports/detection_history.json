@@ -1,5 +1,701 @@
 [
     {
+        "alert_id": "SEC-20261121-62C8FCD3",
+        "timestamp": "2026-11-21 22:54:00",
+        "timestamp_iso": "2026-11-21T22:54:00.839492",
+        "is_intrusion": true,
+        "predicted_class": "DoS",
+        "confidence": 0.4233,
+        "confidence_pct": "42.33%",
+        "severity": "Critical",
+        "severity_color": "#EF4444",
+        "flow_identifier": "VIVA-LIVE-RUN-01",
+        "top_features": [
+            {
+                "rank": 1,
+                "feature": "proto",
+                "importance_score": 0.04528,
+                "shap_value": 0.04528,
+                "feature_value": -5.5803,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Transport protocol identifier (TCP, UDP, ICMP). Protocol anomalies often identify non-standard communication."
+            },
+            {
+                "rank": 2,
+                "feature": "ct_dst_src_ltm",
+                "importance_score": 0.1762,
+                "shap_value": -0.1762,
+                "feature_value": -0.3042,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Connections between source and destination IP."
+            },
+            {
+                "rank": 3,
+                "feature": "ct_srv_src",
+                "importance_score": 0.15813,
+                "shap_value": 0.15813,
+                "feature_value": -0.502,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Connections to the same service from the source IP in the past 100 connections. High values reveal targeted service hammering."
+            },
+            {
+                "rank": 4,
+                "feature": "ct_srv_dst",
+                "importance_score": 0.12546,
+                "shap_value": 0.12546,
+                "feature_value": -0.4668,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for ct_srv_dst observed during the connection sequence."
+            },
+            {
+                "rank": 5,
+                "feature": "sttl",
+                "importance_score": 0.1302,
+                "shap_value": -0.1302,
+                "feature_value": 0.7219,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Source time-to-live. Anomalous or clamped TTL values frequently signify spoofed or automated attack toolkits."
+            },
+            {
+                "rank": 6,
+                "feature": "ct_src_ltm",
+                "importance_score": 0.07289,
+                "shap_value": 0.07289,
+                "feature_value": -0.5239,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for ct_src_ltm observed during the connection sequence."
+            },
+            {
+                "rank": 7,
+                "feature": "swin",
+                "importance_score": 0.01194,
+                "shap_value": 0.01194,
+                "feature_value": -1.0409,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for swin observed during the connection sequence."
+            },
+            {
+                "rank": 8,
+                "feature": "state",
+                "importance_score": 0.05193,
+                "shap_value": -0.05193,
+                "feature_value": 0.9276,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Connection transaction state (CON, FIN, INT, REQ). Incomplete states (INT, REQ) flag half-open SYN flood attacks."
+            },
+            {
+                "rank": 9,
+                "feature": "ackdat",
+                "importance_score": 0.01491,
+                "shap_value": 0.01491,
+                "feature_value": -0.4621,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "TCP handshake SYN-ACK to ACK time."
+            },
+            {
+                "rank": 10,
+                "feature": "dwin",
+                "importance_score": 0.01264,
+                "shap_value": -0.01264,
+                "feature_value": -0.9988,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Network traffic metric for dwin observed during the connection sequence."
+            }
+        ],
+        "explanation_summary": "The Hybrid Deep Learning IDS classified this network traffic sequence as **DoS** with a confidence of **42.33%**. SHAP game-theoretic attribution identified that anomalous values in **proto, ct_srv_src, ct_srv_dst** were the primary drivers pushing the model's decision toward **DoS**. Counterbalancing metrics including **ct_dst_src_ltm, sttl** exhibited normal baseline behavior.",
+        "defensive_playbook": "ACTIVE DOS ATTACK: Implement immediate rate-limiting and connection throttling on ingress interfaces. Engage upstream scrubbing filters and apply SYN-cookie protection to alleviate half-open connection saturation."
+    },
+    {
+        "alert_id": "SEC-20261121-2D24ED01",
+        "timestamp": "2026-11-21 00:45:47",
+        "timestamp_iso": "2026-11-21T00:45:47.167697",
+        "is_intrusion": true,
+        "predicted_class": "Backdoor",
+        "confidence": 0.5813,
+        "confidence_pct": "58.13%",
+        "severity": "Critical",
+        "severity_color": "#EF4444",
+        "flow_identifier": "VIVA-LIVE-RUN-01",
+        "top_features": [
+            {
+                "rank": 1,
+                "feature": "proto",
+                "importance_score": 0.31688,
+                "shap_value": 0.31688,
+                "feature_value": -5.5803,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Transport protocol identifier (TCP, UDP, ICMP). Protocol anomalies often identify non-standard communication."
+            },
+            {
+                "rank": 2,
+                "feature": "dwin",
+                "importance_score": 0.06556,
+                "shap_value": 0.06556,
+                "feature_value": -0.9988,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for dwin observed during the connection sequence."
+            },
+            {
+                "rank": 3,
+                "feature": "swin",
+                "importance_score": 0.09073,
+                "shap_value": 0.09073,
+                "feature_value": -1.0409,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for swin observed during the connection sequence."
+            },
+            {
+                "rank": 4,
+                "feature": "ct_srv_dst",
+                "importance_score": 0.05191,
+                "shap_value": -0.05191,
+                "feature_value": -0.4668,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Network traffic metric for ct_srv_dst observed during the connection sequence."
+            },
+            {
+                "rank": 5,
+                "feature": "ct_srv_src",
+                "importance_score": 0.0318,
+                "shap_value": -0.0318,
+                "feature_value": -0.502,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Connections to the same service from the source IP in the past 100 connections. High values reveal targeted service hammering."
+            },
+            {
+                "rank": 6,
+                "feature": "dttl",
+                "importance_score": 0.0614,
+                "shap_value": 0.0614,
+                "feature_value": -0.8152,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Destination time-to-live. Divergence from standard OS TTL values indicates anomalous path routing or proxies."
+            },
+            {
+                "rank": 7,
+                "feature": "ct_src_ltm",
+                "importance_score": 0.05428,
+                "shap_value": -0.05428,
+                "feature_value": -0.5239,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Network traffic metric for ct_src_ltm observed during the connection sequence."
+            },
+            {
+                "rank": 8,
+                "feature": "state",
+                "importance_score": 0.05751,
+                "shap_value": -0.05751,
+                "feature_value": 0.9276,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Connection transaction state (CON, FIN, INT, REQ). Incomplete states (INT, REQ) flag half-open SYN flood attacks."
+            },
+            {
+                "rank": 9,
+                "feature": "service",
+                "importance_score": 0.05186,
+                "shap_value": -0.05186,
+                "feature_value": 0.6693,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Application service (HTTP, DNS, FTP, SMTP). Target service under stress during DoS or exploit."
+            },
+            {
+                "rank": 10,
+                "feature": "ct_dst_sport_ltm",
+                "importance_score": 0.05016,
+                "shap_value": -0.05016,
+                "feature_value": -0.2823,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Connections to destination from source port."
+            }
+        ],
+        "explanation_summary": "The Hybrid Deep Learning IDS classified this network traffic sequence as **Backdoor** with a confidence of **58.13%**. SHAP game-theoretic attribution identified that anomalous values in **proto, dwin, swin** were the primary drivers pushing the model's decision toward **Backdoor**. Counterbalancing metrics including **ct_srv_dst, ct_srv_src** exhibited normal baseline behavior.",
+        "defensive_playbook": "UNAUTHORIZED ACCESS / PERSISTENT BACKDOOR: Revoke host active credentials and terminate Command-and-Control (C2) channel. Audit host filesystem integrity and network sockets."
+    },
+    {
+        "alert_id": "SEC-20261121-7B5A1599",
+        "timestamp": "2026-11-21 00:02:35",
+        "timestamp_iso": "2026-11-21T00:02:35.817320",
+        "is_intrusion": true,
+        "predicted_class": "Fuzzers",
+        "confidence": 0.5964,
+        "confidence_pct": "59.64%",
+        "severity": "Medium",
+        "severity_color": "#F59E0B",
+        "flow_identifier": "VIVA-LIVE-RUN-01",
+        "top_features": [
+            {
+                "rank": 1,
+                "feature": "dttl",
+                "importance_score": 0.1367,
+                "shap_value": 0.1367,
+                "feature_value": 1.3497,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Destination time-to-live. Divergence from standard OS TTL values indicates anomalous path routing or proxies."
+            },
+            {
+                "rank": 2,
+                "feature": "sttl",
+                "importance_score": 0.02134,
+                "shap_value": -0.02134,
+                "feature_value": 0.7219,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Source time-to-live. Anomalous or clamped TTL values frequently signify spoofed or automated attack toolkits."
+            },
+            {
+                "rank": 3,
+                "feature": "ct_ftp_cmd",
+                "importance_score": 0.11847,
+                "shap_value": -0.11847,
+                "feature_value": -0.0893,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Network traffic metric for ct_ftp_cmd observed during the connection sequence."
+            },
+            {
+                "rank": 4,
+                "feature": "dwin",
+                "importance_score": 0.1031,
+                "shap_value": 0.1031,
+                "feature_value": 1.0012,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for dwin observed during the connection sequence."
+            },
+            {
+                "rank": 5,
+                "feature": "ct_srv_src",
+                "importance_score": 0.05586,
+                "shap_value": 0.05586,
+                "feature_value": 3.001,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Connections to the same service from the source IP in the past 100 connections. High values reveal targeted service hammering."
+            },
+            {
+                "rank": 6,
+                "feature": "service",
+                "importance_score": 0.01265,
+                "shap_value": 0.01265,
+                "feature_value": 0.6693,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Application service (HTTP, DNS, FTP, SMTP). Target service under stress during DoS or exploit."
+            },
+            {
+                "rank": 7,
+                "feature": "dmean",
+                "importance_score": 0.03061,
+                "shap_value": -0.03061,
+                "feature_value": -0.2902,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Mean packet size transmitted by destination."
+            },
+            {
+                "rank": 8,
+                "feature": "swin",
+                "importance_score": 0.0584,
+                "shap_value": 0.0584,
+                "feature_value": 0.9608,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for swin observed during the connection sequence."
+            },
+            {
+                "rank": 9,
+                "feature": "dtcpb",
+                "importance_score": 0.02696,
+                "shap_value": 0.02696,
+                "feature_value": 0.6594,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for dtcpb observed during the connection sequence."
+            },
+            {
+                "rank": 10,
+                "feature": "ackdat",
+                "importance_score": 0.01976,
+                "shap_value": 0.01976,
+                "feature_value": 0.522,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "TCP handshake SYN-ACK to ACK time."
+            }
+        ],
+        "explanation_summary": "The Hybrid Deep Learning IDS classified this network traffic sequence as **Fuzzers** with a confidence of **59.64%**. SHAP game-theoretic attribution identified that anomalous values in **dttl, dwin, ct_srv_src** were the primary drivers pushing the model's decision toward **Fuzzers**. Counterbalancing metrics including **sttl, ct_ftp_cmd** exhibited normal baseline behavior.",
+        "defensive_playbook": "PROTOCOL FUZZING: Abnormal, malformed packet fields received. Verify application protocol parser stability and discard malformed frames."
+    },
+    {
+        "alert_id": "SEC-20261121-47B520C6",
+        "timestamp": "2026-11-21 00:01:02",
+        "timestamp_iso": "2026-11-21T00:01:02.492102",
+        "is_intrusion": true,
+        "predicted_class": "Backdoor",
+        "confidence": 0.5813,
+        "confidence_pct": "58.13%",
+        "severity": "Critical",
+        "severity_color": "#EF4444",
+        "flow_identifier": "VIVA-LIVE-RUN-01",
+        "top_features": [
+            {
+                "rank": 1,
+                "feature": "proto",
+                "importance_score": 0.37662,
+                "shap_value": 0.37662,
+                "feature_value": -5.5803,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Transport protocol identifier (TCP, UDP, ICMP). Protocol anomalies often identify non-standard communication."
+            },
+            {
+                "rank": 2,
+                "feature": "ct_srv_src",
+                "importance_score": 0.01159,
+                "shap_value": -0.01159,
+                "feature_value": -0.502,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Connections to the same service from the source IP in the past 100 connections. High values reveal targeted service hammering."
+            },
+            {
+                "rank": 3,
+                "feature": "ct_src_ltm",
+                "importance_score": 0.06823,
+                "shap_value": -0.06823,
+                "feature_value": -0.5239,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Network traffic metric for ct_src_ltm observed during the connection sequence."
+            },
+            {
+                "rank": 4,
+                "feature": "swin",
+                "importance_score": 0.06668,
+                "shap_value": 0.06668,
+                "feature_value": -1.0409,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for swin observed during the connection sequence."
+            },
+            {
+                "rank": 5,
+                "feature": "ct_srv_dst",
+                "importance_score": 0.038,
+                "shap_value": -0.038,
+                "feature_value": -0.4668,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Network traffic metric for ct_srv_dst observed during the connection sequence."
+            },
+            {
+                "rank": 6,
+                "feature": "dwin",
+                "importance_score": 0.04916,
+                "shap_value": 0.04916,
+                "feature_value": -0.9988,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for dwin observed during the connection sequence."
+            },
+            {
+                "rank": 7,
+                "feature": "state",
+                "importance_score": 0.05552,
+                "shap_value": -0.05552,
+                "feature_value": 0.9276,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Connection transaction state (CON, FIN, INT, REQ). Incomplete states (INT, REQ) flag half-open SYN flood attacks."
+            },
+            {
+                "rank": 8,
+                "feature": "service",
+                "importance_score": 0.04632,
+                "shap_value": -0.04632,
+                "feature_value": 0.6693,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Application service (HTTP, DNS, FTP, SMTP). Target service under stress during DoS or exploit."
+            },
+            {
+                "rank": 9,
+                "feature": "stcpb",
+                "importance_score": 0.03307,
+                "shap_value": 0.03307,
+                "feature_value": -0.7744,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for stcpb observed during the connection sequence."
+            },
+            {
+                "rank": 10,
+                "feature": "dtcpb",
+                "importance_score": 0.03461,
+                "shap_value": 0.03461,
+                "feature_value": -0.7725,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for dtcpb observed during the connection sequence."
+            }
+        ],
+        "explanation_summary": "The Hybrid Deep Learning IDS classified this network traffic sequence as **Backdoor** with a confidence of **58.13%**. SHAP game-theoretic attribution identified that anomalous values in **proto, swin, dwin** were the primary drivers pushing the model's decision toward **Backdoor**. Counterbalancing metrics including **ct_srv_src, ct_src_ltm** exhibited normal baseline behavior.",
+        "defensive_playbook": "UNAUTHORIZED ACCESS / PERSISTENT BACKDOOR: Revoke host active credentials and terminate Command-and-Control (C2) channel. Audit host filesystem integrity and network sockets."
+    },
+    {
+        "alert_id": "SEC-20261120-06B20DE0",
+        "timestamp": "2026-11-20 23:51:17",
+        "timestamp_iso": "2026-11-20T23:51:17.007107",
+        "is_intrusion": true,
+        "predicted_class": "Backdoor",
+        "confidence": 0.5813,
+        "confidence_pct": "58.13%",
+        "severity": "Critical",
+        "severity_color": "#EF4444",
+        "flow_identifier": "VIVA-DEMO-001",
+        "top_features": [
+            {
+                "rank": 1,
+                "feature": "proto",
+                "importance_score": 0.20303,
+                "shap_value": 0.20303,
+                "feature_value": -5.5803,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Transport protocol identifier (TCP, UDP, ICMP). Protocol anomalies often identify non-standard communication."
+            },
+            {
+                "rank": 2,
+                "feature": "dttl",
+                "importance_score": 0.09986,
+                "shap_value": 0.09986,
+                "feature_value": -0.8152,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Destination time-to-live. Divergence from standard OS TTL values indicates anomalous path routing or proxies."
+            },
+            {
+                "rank": 3,
+                "feature": "ct_src_ltm",
+                "importance_score": 0.03777,
+                "shap_value": -0.03777,
+                "feature_value": -0.5239,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Network traffic metric for ct_src_ltm observed during the connection sequence."
+            },
+            {
+                "rank": 4,
+                "feature": "ct_srv_src",
+                "importance_score": 0.0018,
+                "shap_value": 0.0018,
+                "feature_value": -0.502,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Connections to the same service from the source IP in the past 100 connections. High values reveal targeted service hammering."
+            },
+            {
+                "rank": 5,
+                "feature": "dwin",
+                "importance_score": 0.0547,
+                "shap_value": 0.0547,
+                "feature_value": -0.9988,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for dwin observed during the connection sequence."
+            },
+            {
+                "rank": 6,
+                "feature": "ct_srv_dst",
+                "importance_score": 0.06709,
+                "shap_value": -0.06709,
+                "feature_value": -0.4668,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Network traffic metric for ct_srv_dst observed during the connection sequence."
+            },
+            {
+                "rank": 7,
+                "feature": "swin",
+                "importance_score": 0.06097,
+                "shap_value": 0.06097,
+                "feature_value": -1.0409,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for swin observed during the connection sequence."
+            },
+            {
+                "rank": 8,
+                "feature": "ct_dst_sport_ltm",
+                "importance_score": 0.03099,
+                "shap_value": -0.03099,
+                "feature_value": -0.2823,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Connections to destination from source port."
+            },
+            {
+                "rank": 9,
+                "feature": "stcpb",
+                "importance_score": 0.01172,
+                "shap_value": 0.01172,
+                "feature_value": -0.7744,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for stcpb observed during the connection sequence."
+            },
+            {
+                "rank": 10,
+                "feature": "dtcpb",
+                "importance_score": 0.04019,
+                "shap_value": 0.04019,
+                "feature_value": -0.7725,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for dtcpb observed during the connection sequence."
+            }
+        ],
+        "explanation_summary": "The Hybrid Deep Learning IDS classified this network traffic sequence as **Backdoor** with a confidence of **58.13%**. SHAP game-theoretic attribution identified that anomalous values in **proto, dttl, ct_srv_src** were the primary drivers pushing the model's decision toward **Backdoor**. Counterbalancing metrics including **ct_src_ltm, ct_srv_dst** exhibited normal baseline behavior.",
+        "defensive_playbook": "UNAUTHORIZED ACCESS / PERSISTENT BACKDOOR: Revoke host active credentials and terminate Command-and-Control (C2) channel. Audit host filesystem integrity and network sockets."
+    },
+    {
+        "alert_id": "SEC-20261118-79660388",
+        "timestamp": "2026-11-18 15:51:40",
+        "timestamp_iso": "2026-11-18T15:51:40.163673",
+        "is_intrusion": true,
+        "predicted_class": "DoS",
+        "confidence": 0.4163,
+        "confidence_pct": "41.63%",
+        "severity": "Critical",
+        "severity_color": "#EF4444",
+        "flow_identifier": "FLOW-87253",
+        "top_features": [
+            {
+                "rank": 1,
+                "feature": "ct_srv_src",
+                "importance_score": 0.07086,
+                "shap_value": 0.07086,
+                "feature_value": -0.502,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Connections to the same service from the source IP in the past 100 connections. High values reveal targeted service hammering."
+            },
+            {
+                "rank": 2,
+                "feature": "ct_srv_dst",
+                "importance_score": 0.07214,
+                "shap_value": 0.07214,
+                "feature_value": -0.4668,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for ct_srv_dst observed during the connection sequence."
+            },
+            {
+                "rank": 3,
+                "feature": "service",
+                "importance_score": 0.05474,
+                "shap_value": 0.05474,
+                "feature_value": 0.6693,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Application service (HTTP, DNS, FTP, SMTP). Target service under stress during DoS or exploit."
+            },
+            {
+                "rank": 4,
+                "feature": "proto",
+                "importance_score": 0.02472,
+                "shap_value": 0.02472,
+                "feature_value": -1.6224,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Transport protocol identifier (TCP, UDP, ICMP). Protocol anomalies often identify non-standard communication."
+            },
+            {
+                "rank": 5,
+                "feature": "dttl",
+                "importance_score": 0.03269,
+                "shap_value": -0.03269,
+                "feature_value": -0.8152,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Destination time-to-live. Divergence from standard OS TTL values indicates anomalous path routing or proxies."
+            },
+            {
+                "rank": 6,
+                "feature": "ct_dst_ltm",
+                "importance_score": 0.01872,
+                "shap_value": 0.01872,
+                "feature_value": -0.4469,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Connections to destination address in past 100 connections."
+            },
+            {
+                "rank": 7,
+                "feature": "swin",
+                "importance_score": 0.01991,
+                "shap_value": 0.01991,
+                "feature_value": -1.0409,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for swin observed during the connection sequence."
+            },
+            {
+                "rank": 8,
+                "feature": "dwin",
+                "importance_score": 0.03014,
+                "shap_value": 0.03014,
+                "feature_value": -0.9988,
+                "direction": "Increased Risk (Positive)",
+                "is_positive": true,
+                "cyber_context": "Network traffic metric for dwin observed during the connection sequence."
+            },
+            {
+                "rank": 9,
+                "feature": "tcprtt",
+                "importance_score": 0.00763,
+                "shap_value": -0.00763,
+                "feature_value": -0.4705,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "TCP round trip time (synack + ackdat). Connection degradation and delayed handshakes indicate server saturation."
+            },
+            {
+                "rank": 10,
+                "feature": "sttl",
+                "importance_score": 0.02056,
+                "shap_value": -0.02056,
+                "feature_value": 0.7219,
+                "direction": "Decreased Risk (Negative)",
+                "is_positive": false,
+                "cyber_context": "Source time-to-live. Anomalous or clamped TTL values frequently signify spoofed or automated attack toolkits."
+            }
+        ],
+        "explanation_summary": "The Hybrid Deep Learning IDS classified this network traffic sequence as **DoS** with a confidence of **41.63%**. SHAP game-theoretic attribution identified that anomalous values in **ct_srv_src, ct_srv_dst, service** were the primary drivers pushing the model's decision toward **DoS**. Counterbalancing metrics including **dttl, tcprtt** exhibited normal baseline behavior.",
+        "defensive_playbook": "ACTIVE DOS ATTACK: Implement immediate rate-limiting and connection throttling on ingress interfaces. Engage upstream scrubbing filters and apply SYN-cookie protection to alleviate half-open connection saturation."
+    },
+    {
         "alert_id": "SEC-20261114-93D597C5",
         "timestamp": "2026-11-14 12:58:15",
         "timestamp_iso": "2026-11-14T12:58:15.321412",

@@ -1,0 +1,870 @@
+{
+    "CNN": {
+        "num_test_samples": 5996,
+        "accuracy": 0.6461,
+        "macro_precision": 0.2968,
+        "weighted_precision": 0.5726,
+        "macro_recall": 0.2633,
+        "weighted_recall": 0.6461,
+        "macro_f1": 0.2457,
+        "weighted_f1": 0.5706,
+        "inference_latency_ms_total": 494.51,
+        "inference_latency_ms_per_sample": 0.0825,
+        "dos_performance": {
+            "class_id": 3,
+            "precision": 0.2585,
+            "recall": 0.1262,
+            "f1_score": 0.1696,
+            "support": 420
+        },
+        "per_class_metrics": {
+            "Normal": {
+                "class_id": 0,
+                "precision": 0.5579,
+                "recall": 0.9749,
+                "f1_score": 0.7097,
+                "support": 1916
+            },
+            "Analysis": {
+                "class_id": 1,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "support": 68
+            },
+            "Backdoor": {
+                "class_id": 2,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "support": 60
+            },
+            "DoS": {
+                "class_id": 3,
+                "precision": 0.2585,
+                "recall": 0.1262,
+                "f1_score": 0.1696,
+                "support": 420
+            },
+            "Exploits": {
+                "class_id": 4,
+                "precision": 0.5752,
+                "recall": 0.5319,
+                "f1_score": 0.5527,
+                "support": 1143
+            },
+            "Fuzzers": {
+                "class_id": 5,
+                "precision": 0.1538,
+                "recall": 0.0032,
+                "f1_score": 0.0063,
+                "support": 620
+            },
+            "Generic": {
+                "class_id": 6,
+                "precision": 0.9845,
+                "recall": 0.9773,
+                "f1_score": 0.9809,
+                "support": 1367
+            },
+            "Reconnaissance": {
+                "class_id": 7,
+                "precision": 0.4375,
+                "recall": 0.0195,
+                "f1_score": 0.0373,
+                "support": 359
+            },
+            "Shellcode": {
+                "class_id": 8,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "support": 39
+            },
+            "Worms": {
+                "class_id": 9,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "support": 4
+            }
+        },
+        "confusion_matrix": [
+            [
+                1868,
+                0,
+                0,
+                3,
+                35,
+                3,
+                7,
+                0,
+                0,
+                0
+            ],
+            [
+                39,
+                0,
+                0,
+                10,
+                16,
+                2,
+                1,
+                0,
+                0,
+                0
+            ],
+            [
+                30,
+                0,
+                0,
+                10,
+                18,
+                1,
+                1,
+                0,
+                0,
+                0
+            ],
+            [
+                197,
+                0,
+                0,
+                53,
+                166,
+                1,
+                1,
+                2,
+                0,
+                0
+            ],
+            [
+                437,
+                0,
+                0,
+                86,
+                608,
+                3,
+                4,
+                5,
+                0,
+                0
+            ],
+            [
+                527,
+                0,
+                0,
+                14,
+                72,
+                2,
+                4,
+                1,
+                0,
+                0
+            ],
+            [
+                12,
+                0,
+                0,
+                0,
+                19,
+                0,
+                1336,
+                0,
+                0,
+                0
+            ],
+            [
+                206,
+                0,
+                0,
+                29,
+                113,
+                1,
+                3,
+                7,
+                0,
+                0
+            ],
+            [
+                31,
+                0,
+                0,
+                0,
+                7,
+                0,
+                0,
+                1,
+                0,
+                0
+            ],
+            [
+                1,
+                0,
+                0,
+                0,
+                3,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "training_time_s": 25.65,
+        "epochs_completed": 8,
+        "final_val_loss": 0.7294,
+        "final_val_accuracy": 0.7427
+    },
+    "BiLSTM": {
+        "num_test_samples": 5996,
+        "accuracy": 0.6796,
+        "macro_precision": 0.3563,
+        "weighted_precision": 0.6462,
+        "macro_recall": 0.3048,
+        "weighted_recall": 0.6796,
+        "macro_f1": 0.3005,
+        "weighted_f1": 0.6223,
+        "inference_latency_ms_total": 724.64,
+        "inference_latency_ms_per_sample": 0.1209,
+        "dos_performance": {
+            "class_id": 3,
+            "precision": 0.3346,
+            "recall": 0.2024,
+            "f1_score": 0.2522,
+            "support": 420
+        },
+        "per_class_metrics": {
+            "Normal": {
+                "class_id": 0,
+                "precision": 0.5863,
+                "recall": 0.9807,
+                "f1_score": 0.7338,
+                "support": 1916
+            },
+            "Analysis": {
+                "class_id": 1,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "support": 68
+            },
+            "Backdoor": {
+                "class_id": 2,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "support": 60
+            },
+            "DoS": {
+                "class_id": 3,
+                "precision": 0.3346,
+                "recall": 0.2024,
+                "f1_score": 0.2522,
+                "support": 420
+            },
+            "Exploits": {
+                "class_id": 4,
+                "precision": 0.6913,
+                "recall": 0.5722,
+                "f1_score": 0.6261,
+                "support": 1143
+            },
+            "Fuzzers": {
+                "class_id": 5,
+                "precision": 0.4643,
+                "recall": 0.021,
+                "f1_score": 0.0401,
+                "support": 620
+            },
+            "Generic": {
+                "class_id": 6,
+                "precision": 0.9911,
+                "recall": 0.9795,
+                "f1_score": 0.9853,
+                "support": 1367
+            },
+            "Reconnaissance": {
+                "class_id": 7,
+                "precision": 0.4953,
+                "recall": 0.2925,
+                "f1_score": 0.3678,
+                "support": 359
+            },
+            "Shellcode": {
+                "class_id": 8,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "support": 39
+            },
+            "Worms": {
+                "class_id": 9,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "support": 4
+            }
+        },
+        "confusion_matrix": [
+            [
+                1879,
+                0,
+                0,
+                4,
+                16,
+                5,
+                4,
+                8,
+                0,
+                0
+            ],
+            [
+                39,
+                0,
+                0,
+                15,
+                11,
+                0,
+                0,
+                3,
+                0,
+                0
+            ],
+            [
+                25,
+                0,
+                0,
+                10,
+                19,
+                3,
+                0,
+                3,
+                0,
+                0
+            ],
+            [
+                171,
+                0,
+                0,
+                85,
+                137,
+                1,
+                0,
+                26,
+                0,
+                0
+            ],
+            [
+                339,
+                0,
+                0,
+                103,
+                654,
+                4,
+                5,
+                38,
+                0,
+                0
+            ],
+            [
+                538,
+                0,
+                0,
+                21,
+                28,
+                13,
+                1,
+                19,
+                0,
+                0
+            ],
+            [
+                10,
+                0,
+                0,
+                0,
+                16,
+                1,
+                1339,
+                1,
+                0,
+                0
+            ],
+            [
+                178,
+                0,
+                0,
+                15,
+                58,
+                1,
+                2,
+                105,
+                0,
+                0
+            ],
+            [
+                26,
+                0,
+                0,
+                1,
+                3,
+                0,
+                0,
+                9,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                4,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "training_time_s": 36.83,
+        "epochs_completed": 8,
+        "final_val_loss": 0.6214,
+        "final_val_accuracy": 0.776
+    },
+    "CNN + BiLSTM": {
+        "num_test_samples": 5996,
+        "accuracy": 0.6788,
+        "macro_precision": 0.3391,
+        "weighted_precision": 0.6442,
+        "macro_recall": 0.3166,
+        "weighted_recall": 0.6788,
+        "macro_f1": 0.3073,
+        "weighted_f1": 0.6309,
+        "inference_latency_ms_total": 993.19,
+        "inference_latency_ms_per_sample": 0.1656,
+        "dos_performance": {
+            "class_id": 3,
+            "precision": 0.304,
+            "recall": 0.3619,
+            "f1_score": 0.3304,
+            "support": 420
+        },
+        "per_class_metrics": {
+            "Normal": {
+                "class_id": 0,
+                "precision": 0.6261,
+                "recall": 0.9744,
+                "f1_score": 0.7624,
+                "support": 1916
+            },
+            "Analysis": {
+                "class_id": 1,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "support": 68
+            },
+            "Backdoor": {
+                "class_id": 2,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "support": 60
+            },
+            "DoS": {
+                "class_id": 3,
+                "precision": 0.304,
+                "recall": 0.3619,
+                "f1_score": 0.3304,
+                "support": 420
+            },
+            "Exploits": {
+                "class_id": 4,
+                "precision": 0.7037,
+                "recall": 0.5092,
+                "f1_score": 0.5909,
+                "support": 1143
+            },
+            "Fuzzers": {
+                "class_id": 5,
+                "precision": 0.3774,
+                "recall": 0.0323,
+                "f1_score": 0.0594,
+                "support": 620
+            },
+            "Generic": {
+                "class_id": 6,
+                "precision": 0.9933,
+                "recall": 0.9788,
+                "f1_score": 0.986,
+                "support": 1367
+            },
+            "Reconnaissance": {
+                "class_id": 7,
+                "precision": 0.3868,
+                "recall": 0.3092,
+                "f1_score": 0.3437,
+                "support": 359
+            },
+            "Shellcode": {
+                "class_id": 8,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "support": 39
+            },
+            "Worms": {
+                "class_id": 9,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "support": 4
+            }
+        },
+        "confusion_matrix": [
+            [
+                1867,
+                0,
+                0,
+                4,
+                19,
+                8,
+                3,
+                15,
+                0,
+                0
+            ],
+            [
+                32,
+                0,
+                0,
+                22,
+                6,
+                2,
+                0,
+                6,
+                0,
+                0
+            ],
+            [
+                18,
+                0,
+                0,
+                24,
+                13,
+                0,
+                0,
+                5,
+                0,
+                0
+            ],
+            [
+                141,
+                0,
+                0,
+                152,
+                79,
+                7,
+                1,
+                40,
+                0,
+                0
+            ],
+            [
+                276,
+                0,
+                0,
+                217,
+                582,
+                12,
+                2,
+                54,
+                0,
+                0
+            ],
+            [
+                489,
+                0,
+                0,
+                36,
+                34,
+                20,
+                1,
+                40,
+                0,
+                0
+            ],
+            [
+                9,
+                0,
+                0,
+                5,
+                13,
+                0,
+                1338,
+                2,
+                0,
+                0
+            ],
+            [
+                132,
+                0,
+                0,
+                38,
+                73,
+                3,
+                2,
+                111,
+                0,
+                0
+            ],
+            [
+                18,
+                0,
+                0,
+                2,
+                4,
+                1,
+                0,
+                14,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                4,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "training_time_s": 49.99,
+        "epochs_completed": 8,
+        "final_val_loss": 0.6332,
+        "final_val_accuracy": 0.768
+    },
+    "CNN + BiLSTM + Attention": {
+        "num_test_samples": 5996,
+        "accuracy": 0.6771,
+        "macro_precision": 0.3389,
+        "weighted_precision": 0.6275,
+        "macro_recall": 0.3022,
+        "weighted_recall": 0.6771,
+        "macro_f1": 0.2998,
+        "weighted_f1": 0.6219,
+        "inference_latency_ms_total": 1320.75,
+        "inference_latency_ms_per_sample": 0.2203,
+        "dos_performance": {
+            "class_id": 3,
+            "precision": 0.3141,
+            "recall": 0.2071,
+            "f1_score": 0.2496,
+            "support": 420
+        },
+        "per_class_metrics": {
+            "Normal": {
+                "class_id": 0,
+                "precision": 0.5854,
+                "recall": 0.9802,
+                "f1_score": 0.733,
+                "support": 1916
+            },
+            "Analysis": {
+                "class_id": 1,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "support": 68
+            },
+            "Backdoor": {
+                "class_id": 2,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "support": 60
+            },
+            "DoS": {
+                "class_id": 3,
+                "precision": 0.3141,
+                "recall": 0.2071,
+                "f1_score": 0.2496,
+                "support": 420
+            },
+            "Exploits": {
+                "class_id": 4,
+                "precision": 0.7034,
+                "recall": 0.5643,
+                "f1_score": 0.6262,
+                "support": 1143
+            },
+            "Fuzzers": {
+                "class_id": 5,
+                "precision": 0.2537,
+                "recall": 0.0274,
+                "f1_score": 0.0495,
+                "support": 620
+            },
+            "Generic": {
+                "class_id": 6,
+                "precision": 0.9896,
+                "recall": 0.9788,
+                "f1_score": 0.9842,
+                "support": 1367
+            },
+            "Reconnaissance": {
+                "class_id": 7,
+                "precision": 0.5429,
+                "recall": 0.2646,
+                "f1_score": 0.3558,
+                "support": 359
+            },
+            "Shellcode": {
+                "class_id": 8,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "support": 39
+            },
+            "Worms": {
+                "class_id": 9,
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1_score": 0.0,
+                "support": 4
+            }
+        },
+        "confusion_matrix": [
+            [
+                1878,
+                0,
+                0,
+                1,
+                14,
+                11,
+                5,
+                7,
+                0,
+                0
+            ],
+            [
+                39,
+                0,
+                0,
+                14,
+                9,
+                4,
+                0,
+                2,
+                0,
+                0
+            ],
+            [
+                27,
+                0,
+                0,
+                10,
+                14,
+                4,
+                0,
+                5,
+                0,
+                0
+            ],
+            [
+                187,
+                0,
+                0,
+                87,
+                116,
+                12,
+                1,
+                17,
+                0,
+                0
+            ],
+            [
+                327,
+                0,
+                0,
+                130,
+                645,
+                16,
+                2,
+                23,
+                0,
+                0
+            ],
+            [
+                534,
+                0,
+                0,
+                20,
+                30,
+                17,
+                4,
+                15,
+                0,
+                0
+            ],
+            [
+                12,
+                0,
+                0,
+                1,
+                15,
+                0,
+                1338,
+                1,
+                0,
+                0
+            ],
+            [
+                178,
+                0,
+                0,
+                14,
+                67,
+                3,
+                2,
+                95,
+                0,
+                0
+            ],
+            [
+                25,
+                0,
+                0,
+                0,
+                4,
+                0,
+                0,
+                10,
+                0,
+                0
+            ],
+            [
+                1,
+                0,
+                0,
+                0,
+                3,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "training_time_s": 56.64,
+        "epochs_completed": 8,
+        "final_val_loss": 0.6133,
+        "final_val_accuracy": 0.7807
+    }
+}
