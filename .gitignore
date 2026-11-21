@@ -61,6 +61,8 @@ dataset/*.parquet
 !dataset/README.md
 !dataset/NUSW-NB15_features.csv
 !dataset/benchmark_sample.csv
+!dataset/train_benchmark_sample.csv
+!dataset/test_benchmark_sample.csv
 
 # ---------------------------
 # Large Result Logs (auto-generated)

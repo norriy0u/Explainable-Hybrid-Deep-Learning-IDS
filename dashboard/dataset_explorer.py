@@ -9,6 +9,7 @@ import pandas as pd
 import plotly.express as px
 
 from config.config import (
+    DATASET_DIR,
     TRAIN_DATASET_PATH,
     TEST_DATASET_PATH,
     BENCHMARK_SAMPLE_PATH,
@@ -54,11 +55,22 @@ def render_dataset_explorer_page():
         else:
             target_path = TEST_DATASET_PATH
 
+        train_sample_path = DATASET_DIR / "train_benchmark_sample.csv"
+        test_sample_path = DATASET_DIR / "test_benchmark_sample.csv"
+
         if target_path.exists():
             df_selected = load_csv_data(target_path)
             split_name = target_path.name
+        elif "training" in split_option.lower() and train_sample_path.exists():
+            st.info("ℹ️ **Cloud Environment Notice:** Loaded official UNSW-NB15 Training Partition (Stratified Benchmark Sample — 2,879 records) displaying genuine class imbalance.")
+            df_selected = load_csv_data(train_sample_path)
+            split_name = "UNSW-NB15 Training Partition (Stratified Sample)"
+        elif "testing" in split_option.lower() and test_sample_path.exists():
+            st.info("ℹ️ **Cloud Environment Notice:** Loaded official UNSW-NB15 Testing Partition (Stratified Benchmark Sample — 3,503 records) displaying genuine class imbalance.")
+            df_selected = load_csv_data(test_sample_path)
+            split_name = "UNSW-NB15 Testing Partition (Stratified Sample)"
         elif BENCHMARK_SAMPLE_PATH.exists():
-            st.info(f"Full dataset file `{target_path.name}` is not bundled in the cloud repository to preserve memory quota. Loaded the bundled 1,000-record benchmark sample instead.")
+            st.info(f"Loaded balanced benchmark sample ({BENCHMARK_SAMPLE_PATH.name} — 1,000 records, 100 per category).")
             df_selected = load_csv_data(BENCHMARK_SAMPLE_PATH)
             split_name = f"Benchmark Sample ({BENCHMARK_SAMPLE_PATH.name})"
         else:
